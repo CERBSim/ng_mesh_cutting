@@ -1,0 +1,47 @@
+# Here is the project metadata, adapt it to your needs
+[project]
+name = "ng_mesh_cutting"
+version = "0.0.1"
+description="Netgen mesh cutting algorithm"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [] # ngsolve will be added automatically
+dynamic = ["dependencies"]
+classifiers = [
+  "License :: OSI Approved :: GNU Lesser General Public License v2 or later (LGPLv2+)",
+]
+
+# Update NGSolve when you rely on newer features, but keep the '>=' to allow also newer versions
+# Maybe you also need to add other requirements to build your package
+[build-system]
+requires = ["ngsolve>=6.2.2404.post109.dev0", "scikit-build-core>=0.9.0", "pybind11_stubgen", "cmake", "toml"]
+build-backend = "scikit_build_core.build"
+
+##########################################################################
+# Settings for cibuildwheel to build .whl files for Windows/Mac/Linxu
+# DO NOT CHANGE THIS UNLESS YOU KNOW WHAT YOU ARE DOING
+##########################################################################
+
+[tool.scikit-build]
+experimental = true
+# This adds ngsolve (with exact build-time version) to the dependencies
+metadata.dependencies.provider="ngsolve._scikit_build_core_dependencies"
+
+[tool.setuptools_scm]
+local_scheme = "no-local-version"
+
+[tool.cibuildwheel]
+skip = """
+  pp*
+  *_i686
+  *musllinux*
+  *win32
+"""
+
+[tool.cibuildwheel.linux]
+repair-wheel-command = "mv {wheel} {dest_dir} && rename linux_x86_64 manylinux_2_17_x86_64.manylinux2014_x86_64 {dest_dir}/*-linux_x86_64*.whl"
+
+[tool.cibuildwheel.macos]
+environment = {MACOSX_DEPLOYMENT_TARGET="10.15"}
+repair-wheel-command = ""
+archs = ["universal2"]
