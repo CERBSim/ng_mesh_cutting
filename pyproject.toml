@@ -4,7 +4,7 @@ name = "ng_mesh_cutting"
 version = "0.0.1"
 description="Netgen mesh cutting algorithm"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.11"
 dependencies = [] # ngsolve will be added automatically
 dynamic = ["dependencies"]
 classifiers = [
