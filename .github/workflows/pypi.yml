@@ -14,7 +14,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: []
+        os: [ubuntu-latest]
         include:
           - os: windows-2019
             cibw-arch: AMD64
